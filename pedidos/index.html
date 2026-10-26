@@ -8,6 +8,46 @@
 
 
   <style id="pedido-fields-size">#root .pedido-dados-form{width:41%;grid-template-columns:minmax(0,1fr)}@media(max-width:767px){#root .pedido-dados-form{width:100%}}</style>
+<style id="pedido-summary-position">
+@media (min-width:768px) {
+  #root main {
+    margin-top:-240px;
+    grid-template-columns:minmax(0,41%) minmax(0,1fr);
+    align-items:start;
+  }
+  #root main > div:first-child {
+    grid-column:1 / -1;
+    grid-row:2;
+  }
+  #root main > aside {
+    grid-column:2;
+    grid-row:1;
+    position:sticky;
+    top:52px;
+    z-index:40;
+    align-self:start;
+    max-height:calc(100vh - 64px);
+    overflow-y:auto;
+  }
+}
+@media (max-width:767px) {
+  #root main {
+    margin-top:0;
+    grid-template-columns:minmax(0,1fr);
+  }
+  #root main > div:first-child {
+    grid-column:1;
+    grid-row:1;
+  }
+  #root main > aside {
+    grid-column:1;
+    grid-row:2;
+    position:static;
+    max-height:none;
+    overflow:visible;
+  }
+}
+</style>
 </head>
 <body>
   <div id="root"></div>
