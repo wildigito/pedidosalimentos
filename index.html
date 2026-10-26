@@ -50,8 +50,8 @@
       <div class="mark" aria-hidden="true">P</div>
       <h1>Painel administrativo</h1>
       <p>Acesso exclusivo para administrador e entregador. Entre com sua conta autorizada.</p>
-      <label for="adminEmail">E-mail</label>
-      <input id="adminEmail" type="email" autocomplete="username" placeholder="seu@email.com" required>
+      <label for="adminEmail">E-mail do administrador ou entregador</label>
+      <input id="adminEmail" type="email" autocomplete="username" placeholder="nome@exemplo.com" required>
       <label for="adminPassword">Senha</label>
       <input id="adminPassword" type="password" autocomplete="current-password" required>
       <button class="button primary" id="loginButton" type="submit">Entrar no painel</button>
@@ -209,8 +209,6 @@
         return;
       }
       db = window.supabase.createClient(config.url,config.publishableKey);
-      loginEmail.value = ADMIN_EMAIL;
-
       loginForm.addEventListener("submit",async function(event){
         event.preventDefault();
         loginButton.disabled = true;
