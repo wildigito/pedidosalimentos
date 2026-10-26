@@ -1,11 +1,11 @@
 # Pedidos 50 Empresas
 
-- `reset-password.html`: pagina aberta pelo link de recuperacao enviado por e-mail.
+O projeto tem duas áreas independentes:
 
-- `index.html`: painel administrativo, acessível por contas com perfil `admin` ou `entregador`.
-- `pedidos-50-empresas.html`: sistema de pedidos para gerentes.
-- `supabase-config.js`: URL do Supabase e chave publishable do navegador.
+- administrativo/index.html: painel de administração e entregas.
+- pedidos/index.html: sistema de pedidos das empresas.
+- index.html: página inicial para escolher uma das áreas.
 
-Mantenha os dois arquivos HTML no mesmo diretório para que o painel possa abrir o sistema de pedidos.
-Para recuperar a senha, inclua o endereco desta pagina em Authentication > URL Configuration > Redirect URLs no Supabase.
-O SQL e a Edge Function do Supabase são configurados no Supabase e não fazem parte dos arquivos públicos do site.
+Cada área tem seu próprio supabase-config.js. A recuperação de senha do painel fica em administrativo/reset-password.html. No Supabase, inclua o endereço publicado dessa página em Authentication > URL Configuration > Redirect URLs.
+
+Os endereços antigos pedidos-50-empresas.html e reset-password.html continuam redirecionando para os novos caminhos.
