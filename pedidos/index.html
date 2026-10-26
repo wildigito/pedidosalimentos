@@ -276,6 +276,33 @@
   #root main > aside > div:first-child > div:first-child h2::after { transition:none; }
 }
 </style>
+<style id="pedido-header-fields-toggle">
+@media (max-width:767px) {
+  #root > div > header .pedido-dados-form { display:none; }
+  #root > div > header[data-order-fields-open="true"] .pedido-dados-form { display:grid; }
+  #root > div > header > div > div:first-child > div:first-child > div:first-child {
+    position:relative;
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+  #root > div > header > div > div:first-child > div:first-child > div:first-child::after {
+    content:"";
+    position:absolute;
+    right:-4px;
+    bottom:0;
+    width:7px;
+    height:7px;
+    border-right:2px solid #fff;
+    border-bottom:2px solid #fff;
+    filter:drop-shadow(0 1px 2px #111);
+    transform:translate(20%,-20%) rotate(45deg);
+  }
+  #root > div > header > div > div:first-child > div:first-child > div:first-child:focus-visible {
+    outline:3px solid #fca5a5;
+    outline-offset:3px;
+  }
+}
+</style>
 </head>
 <body>
   <div id="root"></div>
@@ -800,6 +827,66 @@ Error generating stack: `+u.message+`
   }
   var observer=new MutationObserver(bind);
   observer.observe(root,{childList:true,subtree:true});
+  bind();
+})();
+</script>
+<script id="pedido-header-fields-toggle">
+(function(){
+  var root=document.getElementById("root");
+  if(!root||!window.MutationObserver)return;
+  var mobile=window.matchMedia("(max-width: 767px)");
+
+  function bind(){
+    var header=root.querySelector(":scope > div > header");
+    var form=header&&header.querySelector(".pedido-dados-form");
+    var logo=header&&header.querySelector(":scope > div > div:first-child > div:first-child > div:first-child");
+    if(!header||!form||!logo)return;
+
+    if(!header.hasAttribute("data-order-fields-open")){
+      header.dataset.orderFieldsOpen="false";
+    }
+    if(!form.id)form.id="pedido-order-details";
+
+    function syncAccessibility(){
+      var open=header.dataset.orderFieldsOpen==="true";
+      form.setAttribute("aria-hidden",mobile.matches&&!open?"true":"false");
+      if(mobile.matches){
+        logo.setAttribute("role","button");
+        logo.setAttribute("tabindex","0");
+        logo.setAttribute("aria-label","Mostrar ou ocultar os dados do pedido");
+        logo.setAttribute("aria-controls",form.id);
+        logo.setAttribute("aria-expanded",String(open));
+      }else{
+        logo.removeAttribute("role");
+        logo.removeAttribute("tabindex");
+        logo.removeAttribute("aria-label");
+        logo.removeAttribute("aria-controls");
+        logo.removeAttribute("aria-expanded");
+      }
+    }
+
+    syncAccessibility();
+    if(logo.dataset.orderFieldsToggleBound)return;
+    logo.dataset.orderFieldsToggleBound="true";
+
+    function toggle(){
+      if(!mobile.matches)return;
+      header.dataset.orderFieldsOpen=String(header.dataset.orderFieldsOpen!=="true");
+      syncAccessibility();
+    }
+
+    logo.addEventListener("click",toggle);
+    logo.addEventListener("keydown",function(event){
+      if(mobile.matches&&(event.key==="Enter"||event.key===" ")){
+        event.preventDefault();
+        toggle();
+      }
+    });
+  }
+
+  new MutationObserver(bind).observe(root,{childList:true,subtree:true});
+  if(mobile.addEventListener)mobile.addEventListener("change",bind);
+  else mobile.addListener(bind);
   bind();
 })();
 </script>
