@@ -78,6 +78,204 @@
   #root main > aside { transition:none; }
 }
 </style>
+<style id="pedido-mobile-shopping-layout">
+@media (max-width:767px) {
+  #root > div > header {
+    position:relative;
+    top:auto;
+    z-index:20;
+    background:var(--bg);
+  }
+  #root > div > header > div {
+    gap:10px;
+    padding:10px 12px;
+  }
+  #root > div > header > div > div:first-child {
+    min-height:42px;
+    gap:8px;
+  }
+  #root > div > header > div > .pedido-dados-form {
+    width:100%;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px 10px;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:var(--card);
+  }
+  #root .pedido-dados-form > div:nth-child(4) {
+    grid-column:1 / -1;
+  }
+  #root .pedido-dados-form select,
+  #root .pedido-dados-form input {
+    min-width:0;
+    height:44px;
+    font-size:13px;
+  }
+  #root main {
+    margin-top:0;
+    grid-template-columns:minmax(0,1fr);
+    gap:0;
+    padding:12px 12px calc(190px + env(safe-area-inset-bottom));
+  }
+  #root main > div:first-child {
+    grid-column:1;
+    grid-row:1;
+    min-width:0;
+  }
+  #root main > div:first-child > div:first-child {
+    position:sticky;
+    top:0;
+    z-index:25;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+    margin:0 0 12px;
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:var(--bg);
+    box-shadow:0 8px 24px rgba(0,0,0,.12);
+    backdrop-filter:blur(14px);
+  }
+  #root main > div:first-child > div:first-child > div:nth-child(1) {
+    width:100%;
+    min-width:0;
+  }
+  #root main > div:first-child > div:first-child input {
+    height:44px;
+    border-radius:13px;
+  }
+  #root main > div:first-child > div:first-child > div:nth-child(2) {
+    display:flex;
+    flex-wrap:nowrap;
+    gap:8px;
+    width:100%;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:none;
+    padding-bottom:2px;
+  }
+  #root main > div:first-child > div:first-child > div:nth-child(2)::-webkit-scrollbar {
+    display:none;
+  }
+  #root main > div:first-child > div:first-child > div:nth-child(2) > button {
+    flex:0 0 auto;
+    min-height:40px;
+    border-radius:13px;
+  }
+  #root main > div:first-child > div:nth-child(2) {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  #root main > div:first-child > div:nth-child(2) > div {
+    display:grid;
+    grid-template-columns:78px minmax(0,1fr);
+    align-items:start;
+    gap:10px;
+    padding:10px;
+    border-radius:18px;
+  }
+  #root main > div:first-child > div:nth-child(2) > div > div:first-child {
+    width:78px;
+    height:78px;
+    border-radius:12px;
+  }
+  #root main > div:first-child > div:nth-child(2) > div > div:first-child img {
+    border-radius:12px;
+  }
+  #root main > div:first-child > div:nth-child(2) > div > div:nth-child(2) {
+    min-width:0;
+    gap:8px;
+    padding:0;
+  }
+  #root main > div:first-child > div:nth-child(2) > div h3 {
+    min-height:0;
+    font-size:14px;
+    line-height:1.3;
+  }
+  #root main > div:first-child > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(2) {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+  }
+  #root main > div:first-child > div:nth-child(2) > div input[type=number],
+  #root main > div:first-child > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(2) button {
+    min-height:40px;
+  }
+  #root main > aside {
+    grid-row:auto;
+    position:fixed;
+    top:auto;
+    right:12px;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    left:12px;
+    z-index:100;
+    width:auto;
+    max-height:64px;
+    overflow:hidden;
+    overscroll-behavior:contain;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:var(--card);
+    box-shadow:0 12px 36px rgba(0,0,0,.24);
+    transition:max-height .25s ease, box-shadow .25s ease;
+  }
+  #root main > aside[data-mobile-open="true"] {
+    max-height:min(78vh,720px);
+    overflow-y:auto;
+  }
+  #root main > aside > div:first-child {
+    border:0;
+    border-radius:18px;
+    background:var(--card);
+    box-shadow:none;
+  }
+  #root main > aside > div:first-child > div:first-child {
+    min-height:56px;
+    cursor:pointer;
+    user-select:none;
+  }
+  #root main > aside > div:first-child > div:first-child h2::after {
+    content:"⌄";
+    display:inline-block;
+    margin-left:.45rem;
+    transition:transform .2s ease;
+  }
+  #root main > aside[data-mobile-open="true"] > div:first-child > div:first-child h2::after {
+    transform:rotate(180deg);
+  }
+  #root main > aside > div:first-child > div:first-child:focus-visible {
+    outline:2px solid var(--accent);
+    outline-offset:-3px;
+  }
+  #pedidos-pdf-whatsapp {
+    left:12px !important;
+    right:12px !important;
+    bottom:calc(84px + env(safe-area-inset-bottom)) !important;
+    z-index:90 !important;
+    width:calc(100% - 24px) !important;
+    height:48px !important;
+    padding:0 16px !important;
+    border-radius:14px !important;
+  }
+}
+@media (max-width:359px) {
+  #root > div > header > div > .pedido-dados-form {
+    grid-template-columns:minmax(0,1fr);
+  }
+  #root .pedido-dados-form > div:nth-child(4) {
+    grid-column:1;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #root main > aside { transition:none; }
+  #root main > aside > div:first-child > div:first-child h2::after { transition:none; }
+}
+</style>
 </head>
 <body>
   <div id="root"></div>
@@ -570,6 +768,39 @@ Error generating stack: `+u.message+`
   }
   new MutationObserver(scheduleSave).observe(document.body,{subtree:true,childList:true,characterData:true});
   scheduleSave();
+})();
+</script>
+<script id="pedido-summary-mobile-toggle">
+(function(){
+  var root=document.getElementById("root");
+  if(!root||!window.MutationObserver)return;
+  var mobile=window.matchMedia("(max-width: 767px)");
+  function bind(){
+    var aside=root.querySelector("main > aside");
+    var trigger=aside&&aside.querySelector(":scope > div:first-child > div:first-child");
+    if(!aside||!trigger||trigger.dataset.mobileToggleBound)return;
+    trigger.dataset.mobileToggleBound="true";
+    trigger.setAttribute("role","button");
+    trigger.setAttribute("tabindex","0");
+    trigger.setAttribute("aria-label","Resumo do pedido. Toque para abrir ou fechar.");
+    trigger.setAttribute("aria-expanded",aside.dataset.mobileOpen==="true"?"true":"false");
+    function toggle(){
+      if(!mobile.matches)return;
+      var open=aside.dataset.mobileOpen!=="true";
+      aside.dataset.mobileOpen=String(open);
+      trigger.setAttribute("aria-expanded",String(open));
+    }
+    trigger.addEventListener("click",toggle);
+    trigger.addEventListener("keydown",function(event){
+      if((event.key==="Enter"||event.key===" ")&&mobile.matches){
+        event.preventDefault();
+        toggle();
+      }
+    });
+  }
+  var observer=new MutationObserver(bind);
+  observer.observe(root,{childList:true,subtree:true});
+  bind();
 })();
 </script>
 </body>
