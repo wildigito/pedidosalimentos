@@ -838,6 +838,7 @@ Error generating stack: `+u.message+`
 (function(){
   var root=document.getElementById("root");
   if(!root||!window.MutationObserver)return;
+  var hoverDevice=window.matchMedia&&window.matchMedia("(hover: hover) and (pointer: fine)");
 
   function bind(){
     var header=root.querySelector(":scope > div > header");
@@ -866,16 +867,33 @@ Error generating stack: `+u.message+`
       });
     }
 
-    function toggle(){
-      header.dataset.orderFieldsOpen=String(header.dataset.orderFieldsOpen!=="true");
+    function setOpen(open){
+      header.dataset.orderFieldsOpen=String(open);
       syncAccessibility();
     }
 
+    function toggle(){
+      setOpen(header.dataset.orderFieldsOpen!=="true");
+    }
+
     syncAccessibility();
+    if(!header.dataset.orderFieldsHoverBound){
+      header.dataset.orderFieldsHoverBound="true";
+      header.addEventListener("pointerleave",function(event){
+        if(hoverDevice&&hoverDevice.matches&&event.pointerType==="mouse")setOpen(false);
+      });
+    }
+
     triggers.forEach(function(trigger){
       if(trigger.dataset.orderFieldsToggleBound)return;
       trigger.dataset.orderFieldsToggleBound="true";
-      trigger.addEventListener("click",toggle);
+      trigger.addEventListener("pointerenter",function(event){
+        if(hoverDevice&&hoverDevice.matches&&event.pointerType==="mouse")setOpen(true);
+      });
+      trigger.addEventListener("click",function(event){
+        if(hoverDevice&&hoverDevice.matches&&event.detail>0){setOpen(true);return;}
+        toggle();
+      });
       trigger.addEventListener("keydown",function(event){
         if(event.key==="Enter"||event.key===" "){
           event.preventDefault();
