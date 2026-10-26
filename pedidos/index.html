@@ -280,7 +280,7 @@
 @media (max-width:767px) {
   #root > div > header .pedido-dados-form { display:none; }
   #root > div > header[data-order-fields-open="true"] .pedido-dados-form { display:grid; }
-  #root > div > header > div > div:first-child > div:first-child > div:first-child {
+  #root > div > header > div > div:first-child > div:first-child {
     position:relative;
     cursor:pointer;
     touch-action:manipulation;
@@ -297,7 +297,7 @@
     filter:drop-shadow(0 1px 2px #111);
     transform:translate(20%,-20%) rotate(45deg);
   }
-  #root > div > header > div > div:first-child > div:first-child > div:first-child:focus-visible {
+  #root > div > header > div > div:first-child > div:first-child:focus-visible {
     outline:3px solid #fca5a5;
     outline-offset:3px;
   }
@@ -839,7 +839,7 @@ Error generating stack: `+u.message+`
   function bind(){
     var header=root.querySelector(":scope > div > header");
     var form=header&&header.querySelector(".pedido-dados-form");
-    var logo=header&&header.querySelector(":scope > div > div:first-child > div:first-child > div:first-child");
+    var logo=header&&header.querySelector(":scope > div > div:first-child > div:first-child");
     if(!header||!form||!logo)return;
 
     if(!header.hasAttribute("data-order-fields-open")){
