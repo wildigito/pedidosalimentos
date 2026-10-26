@@ -314,6 +314,16 @@
   #root > div > header[data-order-fields-open="true"] + main { margin-top:-240px; }
 }
 </style>
+<style id="pedido-summary-modal-close">
+#root main > aside[data-order-modal-open="true"] {
+  max-height:0 !important;
+  overflow:hidden !important;
+  z-index:40 !important;
+  border:0 !important;
+  box-shadow:none !important;
+  pointer-events:none !important;
+}
+</style>
 </head>
 <body>
   <div id="root"></div>
@@ -815,13 +825,22 @@ Error generating stack: `+u.message+`
   var mobile=window.matchMedia("(max-width: 767px)");
   function bind(){
     var aside=root.querySelector("main > aside");
-    var trigger=aside&&aside.querySelector(":scope > div:first-child > div:first-child");
-    if(!aside||!trigger||trigger.dataset.mobileToggleBound)return;
+    if(!aside)return;
+    var modal=root.querySelector(".fixed.inset-0.z-50");
+    if(modal){
+      aside.dataset.orderModalOpen="true";
+      aside.dataset.mobileOpen="false";
+    }else{
+      delete aside.dataset.orderModalOpen;
+    }
+    var trigger=aside.querySelector(":scope > div:first-child > div:first-child");
+    if(!trigger)return;
+    trigger.setAttribute("aria-expanded",modal?"false":aside.dataset.mobileOpen==="true"?"true":"false");
+    if(trigger.dataset.mobileToggleBound)return;
     trigger.dataset.mobileToggleBound="true";
     trigger.setAttribute("role","button");
     trigger.setAttribute("tabindex","0");
     trigger.setAttribute("aria-label","Resumo do pedido. Toque para abrir ou fechar.");
-    trigger.setAttribute("aria-expanded",aside.dataset.mobileOpen==="true"?"true":"false");
     function toggle(){
       if(!mobile.matches)return;
       var open=aside.dataset.mobileOpen!=="true";
