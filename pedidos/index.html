@@ -48,6 +48,36 @@
   }
 }
 </style>
+<style id="pedido-summary-hover">
+@media (min-width:768px) {
+  #root main > aside {
+    max-height:58px;
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
+  #root main > aside:hover,
+  #root main > aside:focus-within {
+    max-height:calc(100vh - 64px);
+    overflow-y:auto;
+  }
+  #root main > aside > div:first-child > div:first-child {
+    cursor:pointer;
+  }
+  #root main > aside > div:first-child > div:first-child h2::after {
+    content:"⌄";
+    display:inline-block;
+    margin-left:.45rem;
+    transition:transform .2s ease;
+  }
+  #root main > aside:hover > div:first-child > div:first-child h2::after,
+  #root main > aside:focus-within > div:first-child > div:first-child h2::after {
+    transform:rotate(180deg);
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #root main > aside { transition:none; }
+}
+</style>
 </head>
 <body>
   <div id="root"></div>
