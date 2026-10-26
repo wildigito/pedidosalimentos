@@ -18,6 +18,7 @@
     .login-card{width:min(100%,430px);padding:26px;border:1px solid #292a30;border-radius:18px;background:#191a1f;box-shadow:0 18px 60px #0005}
     .mark{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:#dc2626;color:#fff;font-weight:900;font-size:21px;margin-bottom:18px}
     .login-card h1{font-size:24px}.login-card p{color:#a1a1aa;font-size:13px;line-height:1.5}
+    .text-button{display:block;width:100%;margin-top:12px;padding:6px;border:0;background:transparent;color:#fca5a5;font-size:12px;text-decoration:underline}
     label{display:block;margin:15px 0 7px;color:#d4d4d8;font-size:12px;font-weight:700}
     input,select{width:100%;height:42px;padding:0 12px;border:1px solid #383940;border-radius:10px;background:#101114;color:#fafafa;outline:none}
     input:focus,select:focus{border-color:#ef4444;box-shadow:0 0 0 3px #ef444422}
@@ -54,6 +55,7 @@
       <label for="adminPassword">Senha</label>
       <input id="adminPassword" type="password" autocomplete="current-password" required>
       <button class="button primary" id="loginButton" type="submit">Entrar no painel</button>
+      <button class="text-button" id="forgotPasswordButton" type="button">Esqueci minha senha</button>
       <div class="msg" id="loginMessage" role="status" aria-live="polite"></div>
     </form>
   </section>
@@ -114,6 +116,7 @@
       const loginPassword = document.getElementById("adminPassword");
       const loginMessage = document.getElementById("loginMessage");
       const loginButton = document.getElementById("loginButton");
+      const forgotPasswordButton = document.getElementById("forgotPasswordButton");
       const ordersBody = document.getElementById("ordersBody");
       const escapeHTML = function(value){return String(value==null?"":value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");};
       let db = null;
@@ -220,6 +223,26 @@
           setMessage("Confira o e-mail, a senha e se sua conta foi autorizada no painel.",false);
         } finally {
           loginButton.disabled = false;
+        }
+      });
+      forgotPasswordButton.addEventListener("click",async function(){
+        const email = loginEmail.value.trim();
+        if(!email){
+          setMessage("Digite o e-mail da conta para receber o link de recuperação.",false);
+          loginEmail.focus();
+          return;
+        }
+        forgotPasswordButton.disabled = true;
+        setMessage("Solicitando recuperação de senha...",true);
+        try {
+          const redirectTo = new URL("reset-password.html",window.location.href).toString();
+          const result = await db.auth.resetPasswordForEmail(email,{redirectTo:redirectTo});
+          if(result.error) throw result.error;
+          setMessage("Se esse e-mail estiver cadastrado, enviaremos um link para redefinir a senha.",true);
+        } catch(error) {
+          setMessage("Não consegui enviar o link. Confira as URLs permitidas na configuração do Supabase.",false);
+        } finally {
+          forgotPasswordButton.disabled = false;
         }
       });
       const managerForm = document.getElementById("managerForm");
